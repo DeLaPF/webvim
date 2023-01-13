@@ -12,4 +12,6 @@ services:
     volumes:
       - .:/home/dev/workspace
       - ~/.config:/home/dev/.config
+      - ~/.ssh:/home/dev/.ssh:ro
+      - ~/.gitconfig:/home/dev/.gitconfig:ro
     restart: unless-stopped
