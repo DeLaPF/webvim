@@ -2,7 +2,10 @@
 
 echo "Running Custom Setup"
 
-# TODO: Pull '.' files from github 
+# Pull .config files from github if dir doesn't already exist
+if [ ! -d "/home/$USER/.config" ]; then
+    git clone https://github.com/DeLaPF/.config.git /home/$USER/.config
+fi
 
 # TMUX Config
 if [ ! -f "/home/$USER/.tmux.conf" ]; then

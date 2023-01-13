@@ -11,6 +11,7 @@ services:
       - WORKSPACE_NAME=workspace
     volumes:
       - .:/home/dev/workspace
+      # remove to pull .config from github
       - ~/.config:/home/dev/.config
       - ~/.ssh:/home/dev/.ssh:ro
       - ~/.gitconfig:/home/dev/.gitconfig:ro
