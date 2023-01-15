@@ -25,10 +25,6 @@ RUN apt update && apt install -y \
   	zsh
 
 # Neovim
-#RUN curl -LO https://github.com/neovim/neovim/releases/download/v0.8.2/nvim-linux64.tar.gz
-#RUN tar xzvf nvim-linux64.tar.gz
-#RUN rsync -a nvim-linux64/ /usr/local/
-#RUN rm -rf nvim-linux64*
 RUN apt update && apt install -y software-properties-common \
 	&& add-apt-repository ppa:neovim-ppa/unstable \
 	&& apt update \
@@ -40,9 +36,7 @@ ENV NODE_VERSION 18.12.1
 RUN mkdir /usr/local/nvm
 RUN curl https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
 RUN source $NVM_DIR/nvm.sh \
-    && nvm install $NODE_VERSION #\
-    #&& nvm alias default $NODE_VERSION \
-    #&& nvm use default
+    && nvm install $NODE_VERSION
 
 # Make node and npm available
 ENV NODE_PATH $NVM_DIR/v$NODE_VERSION/lib/node_modules
@@ -52,6 +46,11 @@ ENV PATH $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
 RUN npm i -g yarn \
     && yarn global add wetty
 
-ADD ./bootstrap.sh /usr/local/sbin
+# Additional Setup Files
+COPY ./setup.sh ./packer_sync.sh /usr/local/bin
+RUN chmod +x /usr/local/bin/*.sh
+
+# Bootstrap
+COPY ./bootstrap.sh /usr/local/sbin
 RUN chmod u+x /usr/local/sbin/bootstrap.sh
 CMD [ "bootstrap.sh" ]

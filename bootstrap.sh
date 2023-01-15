@@ -2,7 +2,6 @@
 
 user=${USER:=dev}
 password=${PASSWORD:=dev}
-wsname=${WORKSPACE_NAME:=workspace}
 
 # Set Up New User If they Don't Already Exist
 getent passwd $user  > /dev/null
@@ -16,10 +15,9 @@ if [ ! $? -eq 0 ]; then
 fi
 
 # Extra Setup
-setup=/home/$user/$wsname/setup.sh
-if [ -f "$setup" ]; then
+if [ -f "/usr/local/bin/setup.sh" ]; then
     echo "Setup Found"
-    chmod +x $setup && $setup
+    setup.sh
 fi
 
 wetty
