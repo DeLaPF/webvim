@@ -19,9 +19,6 @@ fi
 if [ ! -f "/home/$USER/.zshrc" ]; then
     ln -s /home/$USER/.config/.zshrc /home/$USER/.zshrc
 fi
-if [ ! -f "/usr/local/bin/starship" ]; then
-    curl -sS https://starship.rs/install.sh | sh -s -- -y
-fi
 if [ ! -d "/home/$USER/.zsh" ]; then
     git clone https://github.com/zsh-users/zsh-syntax-highlighting.git \
         /home/$USER/.zsh/plugins/zsh-syntax-highlighting

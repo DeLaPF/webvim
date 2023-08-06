@@ -6,24 +6,31 @@ password=${PASSWORD:=dev}
 # Set Up New User If they Don't Already Exist
 getent passwd $user  > /dev/null
 if [ ! $? -eq 0 ]; then
-    useradd $user
+    useradd -g users -G sudo -s /bin/zsh -m $user
     echo "$user:$password" | chpasswd
     echo "root:$password" | chpasswd
-    adduser $user sudo
-    chsh -s /bin/zsh $user
-    chown -R $user /home/$user
+    chown $user /home/$user
 fi
 
 # Add permissions to scripts
 chmod +x /usr/local/bin/*.sh
 
 # Extra Setup
-echo "Looking for setup.sh..."
-if [ -f "/usr/local/bin/setup.sh" ]; then
-    echo "Setup Found"
-    setup.sh
+## Root
+echo "Looking for root_setup.sh..."
+if [ -f "/usr/local/bin/root_setup.sh" ]; then
+    echo "Root Setup Found"
+    root_setup.sh
 else
-    echo "Skipping. Setup Not Found"
+    echo "Skipping. Root Setup Not Found"
+fi
+echo "Looking for user_setup.sh..."
+## User
+if [ -f "/usr/local/bin/user_setup.sh" ]; then
+    echo "User Setup Found"
+    su $user -c user_setup.sh
+else
+    echo "Skipping. User Setup Not Found"
 fi
 
 echo "Starting Wetty Server"

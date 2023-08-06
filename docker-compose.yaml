@@ -18,7 +18,8 @@ services:
       - PASSWORD=dev
     volumes:
       # Setup Script
-      - ./setup.sh:/usr/local/bin/setup.sh
+      - ./root_setup.sh:/usr/local/bin/root_setup.sh
+      - ./user_setup.sh:/usr/local/bin/user_setup.sh
       - ./packer_sync.sh:/usr/local/bin/packer_sync.sh
       # change '.' to wanted dir on host
       #- .:/home/dev/workspace
