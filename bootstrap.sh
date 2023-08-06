@@ -28,7 +28,9 @@ echo "Looking for user_setup.sh..."
 ## User
 if [ -f "/usr/local/bin/user_setup.sh" ]; then
     echo "User Setup Found"
+    cd /home/$user
     su $user -c user_setup.sh
+    cd ~
 else
     echo "Skipping. User Setup Not Found"
 fi
