@@ -14,12 +14,19 @@ if [ ! $? -eq 0 ]; then
     chown -R $user /home/$user
 fi
 
+# Add permissions to scripts
+chmod +x /usr/local/bin/*.sh
+
 # Extra Setup
+echo "Looking for setup.sh..."
 if [ -f "/usr/local/bin/setup.sh" ]; then
     echo "Setup Found"
     setup.sh
+else
+    echo "Skipping. Setup Not Found"
 fi
 
+echo "Starting Wetty Server"
 wetty
 
 exit
