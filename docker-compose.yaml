@@ -8,7 +8,7 @@ services:
     privileged: true
     ports:
       # Wetty Port
-      - "3000:3000"
+      - "80:3000"
       # React Port
       - "8080:8080"
       # Firebase Port
@@ -20,12 +20,9 @@ services:
       # Setup Script
       - ./root_setup.sh:/usr/local/bin/root_setup.sh
       - ./user_setup.sh:/usr/local/bin/user_setup.sh
-      - ./packer_sync.sh:/usr/local/bin/packer_sync.sh
       # change '.' to wanted dir on host
       #- .:/home/dev/workspace
       - /mnt/d/dev:/home/dev/dev
-      # remove to pull .config from github
-      - ~/.config:/home/dev/.config
       - ~/.ssh:/home/dev/.ssh:ro
       - ~/.gitconfig:/home/dev/.gitconfig:ro
     restart: unless-stopped

@@ -24,13 +24,4 @@ if [ ! -d "/home/$USER/.zsh" ]; then
         /home/$USER/.zsh/plugins/zsh-syntax-highlighting
 fi
 
-# Nvim Config
-if [ ! -d "/home/$USER/.local/share/nvim/site" ]; then
-    git clone --depth 1 https://github.com/wbthomason/packer.nvim \
-        /home/$USER/.local/share/nvim/site/pack/packer/start/packer.nvim
-fi
-
-# Ensure proper ownership of all newly added files
-chown -R $USER /home/$USER
-
 exit
