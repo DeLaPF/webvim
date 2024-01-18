@@ -5,6 +5,9 @@ echo "Running Custom Setup"
 # Pull .config files from github if dir doesn't already exist
 if [ ! -d "/home/$USER/.config" ]; then
     git clone https://github.com/DeLaPF/.config.git /home/$USER/.config
+    # Note: must run `git remote set-url origin git@github.com:DeLaPF/.config.git` to push commits
+    # Could alternatively run `git clone git@github.com:DeLaPF/.config.git /home/$USER/.config` to avoid above issue
+    # TODO: determine if an ssh key is required ssh clone (if not clone with ssh instead of https)
 fi
 
 # TMUX Config
