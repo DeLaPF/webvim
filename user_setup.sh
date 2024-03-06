@@ -2,29 +2,24 @@
 
 echo "Running Custom Setup"
 
-# Pull .config files from github if dir doesn't already exist
-if [ ! -d "/home/$USER/.config" ]; then
-    git clone https://github.com/DeLaPF/.config.git /home/$USER/.config
-    # Note: must run `git remote set-url origin git@github.com:DeLaPF/.config.git` to push commits
-    # Could alternatively run `git clone git@github.com:DeLaPF/.config.git /home/$USER/.config` to avoid above issue
-    # TODO: determine if an ssh key is required ssh clone (if not clone with ssh instead of https)
+# Dotfile Config
+dot_dir="/home/$USER/.dotfiles"
+if [ ! -d $dot_dir ]; then
+    git clone git@github.com:DeLaPF/.dotfiles.git $dot_dir
+    $(cd $dot_dir && stow nvim scripts shell)
 fi
 
-# TMUX Config
-if [ ! -f "/home/$USER/.tmux.conf" ]; then
-    ln -s /home/$USER/.config/.tmux.conf /home/$USER/.tmux.conf
-fi
-if [ ! -d "/home/$USER/.tmux" ]; then
-    git clone https://github.com/tmux-plugins/tpm /home/$USER/.tmux/plugins/tpm
+# TMUX Plugins Config
+tmux_plug_dir="/home/$USER/.tmux/plugins"
+if [ ! -d $tmux_plug_dir ]; then
+    git clone https://github.com/tmux-plugins/tpm.git "${tmux_plug_dir}/tpm"
 fi
 
-# ZSH Config
-if [ ! -f "/home/$USER/.zshrc" ]; then
-    ln -s /home/$USER/.config/.zshrc /home/$USER/.zshrc
-fi
-if [ ! -d "/home/$USER/.zsh" ]; then
+# ZSH Plugins Config
+zsh_plug_dir="/home/$USER/.zsh/plugins"
+if [ ! -d $zsh_plug_dir ]; then
     git clone https://github.com/zsh-users/zsh-syntax-highlighting.git \
-        /home/$USER/.zsh/plugins/zsh-syntax-highlighting
+	    "${zsh_plug_dir}/zsh-syntax-highlighting"
 fi
 
 exit
