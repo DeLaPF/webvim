@@ -20,7 +20,7 @@ chmod +x /usr/local/bin/*.sh
 echo "Looking for root_setup.sh..."
 if [ -f "/usr/local/bin/root_setup.sh" ]; then
     echo "Root Setup Found"
-    root_setup.sh
+    root_setup.sh $user
 else
     echo "Skipping. Root Setup Not Found"
 fi

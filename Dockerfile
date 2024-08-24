@@ -23,13 +23,9 @@ RUN apt-get update && apt-get install -y \
     rsync \
     curl \
     wget \
-    zsh
-
-# Neovim
-RUN apt-get update && apt-get install -y software-properties-common \
-    && add-apt-repository ppa:neovim-ppa/unstable \
-    && apt-get update \
-    && apt-get install -y neovim
+    zsh \
+    ripgrep \
+    stow
 
 # Nodejs and npm
 ENV NVM_DIR /usr/local/nvm
@@ -47,7 +43,22 @@ ENV PATH $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
 RUN npm i -g yarn \
     && yarn global add wetty@2.5.0
 # Upgrade npm version (Wetty needs npm v8.19.2)
-RUN npm i -g npm@latest
+RUN npm i -g npm@v8.19.2
+
+# Rust
+RUN curl https://sh.rustup.rs -sSf | bash -s -- -y
+# RUN echo 'source $HOME/.cargo/env' >> $HOME/.bashrc
+ENV PATH="/root/.cargo/bin:${PATH}"
+
+# Neovim (bob)
+RUN cargo install bob-nvim
+RUN bob install stable && bob use stable
+
+RUN apt-get update && apt-get install -y \
+    cmake
+
+# Starship
+RUN cargo install starship
 
 # Bootstrap
 COPY ./bootstrap.sh /usr/local/sbin
